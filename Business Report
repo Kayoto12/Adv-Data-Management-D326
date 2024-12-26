@@ -185,4 +185,7 @@ I would use the PGAGENT tool and have it run either at the end of the day on the
 
 G. (Insert video link here)
 
-H. I utilized the Postgresql documentation within the course, ChatGPT for help with trigger function and YouTube videos on overall SQL functions.
+H. I utilized the Postgresql documentation within the course:
+Malik, U., Goldwasser, M., & Johnston, B. (2019). Sql for data analytics : Perform fast and efficient data analysis with the power of sql. Packt Publishing, Limited.
+ChatGPT for help with trigger function
+YouTube videos on overall SQL functions.
