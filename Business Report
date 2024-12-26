@@ -9,7 +9,7 @@ A3. Identify two tables from the dataset that will provide the data needed for t
 
 A4. Identify at least one field in the detailed table section that will require a custom transformation with a user-defined function and explain why it should be transformed (e.g., you might translate a field with a value of N to No and Y to Yes)….
 
-(Rework this) While the amount field in the payment table typically stores numeric values representing payment amounts, displaying these values as formatted currency enhances readability and presentation in reports. 
+While the amount field in the payment table typically stores numeric values representing payment amounts, displaying these values as formatted currency enhances readability and presentation in reports. 
 
 
 A5. Explain the different business uses of the detailed table section and the summary table section of the report…. 
@@ -18,7 +18,9 @@ The summary table will be able to provide us with key metrics such as total reve
 
 The detailed table will provide us with granular rental and payment details for each customer, transaction level insights and also operational insights which will help us understand the specific interactions customers have with the rental service.
 
-A6. Explain how frequently your report should be refreshed to remain relevant to stakeholders….It depends what the stakeholders intend to do with the information. They could leverage this information to provide a customer reward system to most frequent renters or high revenue generating customers. Or use this information to gauge general customer patterns. In general though I believe this report should be ran weekly to monthly.
+A6. Explain how frequently your report should be refreshed to remain relevant to stakeholders.
+
+It depends what the stakeholders intend to do with the information. Whether to use this information to gauge general customer patterns or create more efficient programs to help maintain their customers. In general this report should be run weekly, monthly, quartly and yearly. Since those times are patterns that can be kept and recorded based on most business forcasts.
 
 Code section:
 
@@ -181,7 +183,7 @@ SELECT * FROM customer_summary
 
 
 F1.
-I would use the PGAGENT tool and have it run either at the end of the day on the last day of the business “week” or end of day end of the month.
+I'd use the pgAGENT tool and automate the times it runs from either the end of the business day, week or month. This depends on how often the business wants the data refreshed.
 
 G. (Insert video link here)
 
