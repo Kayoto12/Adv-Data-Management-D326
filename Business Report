@@ -3,16 +3,18 @@ Business problem: This report is to determine which customers are the highest re
 A1. The detailed table will include the following: CustomerID(int), first_name(VARCHAR), last_name(VARCHAR), email(VARCHAR), total_revenue(INT), rental_count(INT), address(VARCHAR), city(VARCHAR), country(VARCHAR)
     The summary table will include the following: customerid(INT), first_name(VARCHAR), last_name(VARCHAR), total_revenue(INT), rental_count(INT)
 
-A2. Describe the types of data fields used for the report…. INT, DECIMAL, and VARCHAR
+A2. Describe the types of data fields used for the report. 
+
+INT, DECIMAL, and VARCHAR
 
 A3. Identify two tables from the dataset that will provide the data needed for the summary/detailed table section of this report…. For the summary AND detailed tables we will be utilizing the customer, payment, and rental tables from the dataset.
 
-A4. Identify at least one field in the detailed table section that will require a custom transformation with a user-defined function and explain why it should be transformed (e.g., you might translate a field with a value of N to No and Y to Yes)….
+A4. Identify at least one field in the detailed table section that will require a custom transformation with a user-defined function and explain why it should be transformed (e.g., you might translate a field with a value of N to No and Y to Yes).
 
 While the amount field in the payment table typically stores numeric values representing payment amounts, displaying these values as formatted currency enhances readability and presentation in reports. 
 
 
-A5. Explain the different business uses of the detailed table section and the summary table section of the report…. 
+A5. Explain the different business uses of the detailed table section and the summary table section of the report. 
 
 The summary table will be able to provide us with key metrics such as total revenue generated and total number of rentals for each customer. And we can take this information and perform comparative analysis.
 
@@ -24,7 +26,7 @@ It depends what the stakeholders intend to do with the information. Whether to u
 
 Code section:
 
-I regularly used these queries whilst testing
+I used these queries frequently while testing:
 
 DELETE FROM customer_summary
 SELECT * FROM customer_summary
