@@ -1,0 +1,3 @@
+This is my project for D326 Advanced Data Management
+The write up consists of postgreSQL code and the business proposal that goes along with it
+The proposal is creating a report to see the top sales from 10 movies that are locally given by the DVD database.
