@@ -1,0 +1,104 @@
+
+
+Part A-- SQL function to transform customer feedback rating into descriptive categories
+CREATE FUNCTION TransformFeedbackRating(rating INT)
+RETURNS VARCHAR(50)
+BEGIN
+    DECLARE feedback VARCHAR(50);
+    IF rating BETWEEN 1 AND 2 THEN
+        SET feedback = 'Poor';
+    ELSEIF rating BETWEEN 3 AND 4 THEN
+        SET feedback = 'Average';
+    ELSEIF rating = 5 THEN
+        SET feedback = 'Excellent';
+    ELSE
+        SET feedback = 'Invalid Rating';
+    END IF;
+    RETURN feedback;
+END;
+-- Create Detailed Table
+CREATE TABLE Detailed_Report (
+    DVD_Title VARCHAR(255),
+    Genre VARCHAR(100),
+    Release_Date DATE,
+    Copies_Sold INT,
+    Total_Revenue DECIMAL(10, 2),
+    Rental_Duration INT,
+    Feedback_Rating VARCHAR(50)
+);
+
+-- Create Summary Table
+CREATE TABLE Summary_Report (
+    Genre VARCHAR(100),
+    Total_Revenue DECIMAL(10, 2),
+    Avg_Rental_Duration DECIMAL(5, 2),
+    Avg_Feedback_Rating DECIMAL(5, 2)
+);
+INSERT INTO Detailed_Report (DVD_Title, Genre, Release_Date, Copies_Sold, Total_Revenue, Rental_Duration, Feedback_Rating)
+SELECT
+    d.DVD_Title,
+    d.Genre,
+    d.Release_Date,
+    t.Copies_Sold,
+    t.Total_Revenue,
+    t.Rental_Duration,
+    TransformFeedbackRating(t.Feedback_Rating)
+FROM
+    DVD_Information d
+JOIN
+    Transaction_Records t
+ON
+    d.DVD_ID = t.DVD_ID;
+
+CREATE TRIGGER Update_Summary_Report
+AFTER INSERT ON Detailed_Report
+FOR EACH ROW
+BEGIN
+    REPLACE INTO Summary_Report (Genre, Total_Revenue, Avg_Rental_Duration, Avg_Feedback_Rating)
+    SELECT
+        Genre,
+        SUM(Total_Revenue),
+        AVG(Rental_Duration),
+        AVG(CAST(Feedback_Rating AS DECIMAL(5, 2)))
+    FROM
+        Detailed_Report
+    GROUP BY
+        Genre;
+END;
+DELIMITER //
+CREATE PROCEDURE Refresh_Report()
+BEGIN
+    -- Clear existing data
+    TRUNCATE TABLE Detailed_Report;
+    TRUNCATE TABLE Summary_Report;
+
+    -- Populate Detailed Table
+    INSERT INTO Detailed_Report (DVD_Title, Genre, Release_Date, Copies_Sold, Total_Revenue, Rental_Duration, Feedback_Rating)
+    SELECT
+        d.DVD_Title,
+        d.Genre,
+        d.Release_Date,
+        t.Copies_Sold,
+        t.Total_Revenue,
+        t.Rental_Duration,
+        TransformFeedbackRating(t.Feedback_Rating)
+    FROM
+        DVD_Information d
+    JOIN
+        Transaction_Records t
+    ON
+        d.DVD_ID = t.DVD_ID;
+
+    -- Populate Summary Table
+    INSERT INTO Summary_Report (Genre, Total_Revenue, Avg_Rental_Duration, Avg_Feedback_Rating)
+    SELECT
+        Genre,
+        SUM(Total_Revenue),
+        AVG(Rental_Duration),
+        AVG(CAST(Feedback_Rating AS DECIMAL(5, 2)))
+    FROM
+        Detailed_Report
+    GROUP BY
+        Genre;
+END //
+DELIMITER ;
